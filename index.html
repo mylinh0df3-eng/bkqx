@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>七夕 · 心里话</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- 全局元素 -->
+    <span class="top-note" id="topNote"></span>
+    <button class="skip-btn" id="skipBtn" style="display:none;">跳过</button>
+    <nav class="vertical-nav" id="verticalNav">
+        <a data-page="intro" class="active">情书</a>
+        <a data-page="wish">愿望</a>
+        <a data-page="puzzle">拼图</a>
+        <a data-page="voice">声音</a>
+    </nav>
+
+    <!-- 开场页 -->
+    <div class="page active" id="page-intro">
+        <div id="introText1" class="intro-line">有些话，平时说不出口。</div>
+        <div id="introText2" class="intro-line" style="display:none;">今天，可以对我说吗？</div>
+        <div id="introCursor" class="cursor-blink" style="display:none;">丨</div>
+        <div id="introHint" style="display:none; margin-top:10px; font-size:12px; color:#8a8a8a;">写下你想说的，或者，随便看看。</div>
+        <div id="introButtons" style="display:none; margin-top:30px; text-align:center;">
+            <button class="btn" data-action="write">写点什么</button>
+            <button class="btn" data-action="browse">先逛逛</button>
+        </div>
+    </div>
+
+    <!-- 首页/弹幕墙 -->
+    <div class="page" id="page-home">
+        <div class="barrage-track" id="track1"></div>
+        <div class="barrage-track" id="track2"></div>
+        <div class="barrage-track" id="track3"></div>
+        <button class="btn btn-primary" id="addBarrageBtn">✎ 我也想说一句</button>
+    </div>
+
+    <!-- 电子情书选择页 -->
+    <div class="page" id="page-letter-choice">
+        <h2>写一封信</h2>
+        <p style="color:#8a8a8a;">给现在的人 · 给未来的人</p>
+        <button class="btn btn-primary" data-action="letter-now">现在寄出</button>
+        <button class="btn" data-action="letter-timer">定时寄出</button>
+        <p style="margin-top:20px;"><a href="#" id="gotoWall" style="color:#8a8a8a;">你也可以看看别人写的信 → 信墙</a></p>
+    </div>
+
+    <!-- 写信页 -->
+    <div class="page" id="page-letter-write">
+        <div class="letter-paper" id="letterPaper">
+            <span class="no" id="letterNo">No. 0000</span>
+            <input type="text" id="letterTo" placeholder="致 ______" style="font-size:1.3em;">
+            <textarea id="letterContent" placeholder="在这里写你想说的话。可以很长，可以很短，可以语无伦次。这里没有人评判你。"></textarea>
+            <input type="text" id="letterFrom" placeholder="—— 你的名字（留空显示匿名）" style="text-align:right;">
+        </div>
+        <div style="display:flex; justify-content:space-between; width:100%; max-width:600px; margin-top:10px; font-size:14px;">
+            <span id="letterCount">已写 0 字</span>
+            <span>
+                <button class="btn" id="saveLetterBtn">保存草稿</button>
+                <button class="btn btn-primary" id="sealLetterBtn">封存这封信</button>
+            </span>
+        </div>
+    </div>
+
+    <!-- 封存动画与寄出 -->
+    <div class="page" id="page-letter-seal">
+        <div id="sealAnimation">信纸三折中...</div>
+        <div id="sealOptions" style="display:none; text-align:center;">
+            <p style="margin-bottom:20px;">这封信已封存</p>
+            <button class="btn" id="copyLinkBtn">复制链接</button>
+            <button class="btn" id="downloadImageBtn">下载为图片</button>
+            <button class="btn" id="generateQRBtn">生成二维码</button>
+            <div id="qrContainer" style="margin-top:20px;"></div>
+        </div>
+    </div>
+
+    <!-- 收信页 -->
+    <div class="page" id="page-letter-receive">
+        <div id="receiveEnvelope" style="cursor:pointer;">
+            <p>有你的一封信</p>
+            <button class="btn btn-primary" id="openLetterBtn">点击拆封</button>
+        </div>
+        <div id="receiveContent" style="display:none;">
+            <div class="letter-paper">
+                <p id="receiveFrom"></p>
+                <p id="receiveBody" style="white-space:pre-wrap;"></p>
+                <p id="receiveDate" style="font-size:12px; color:#aaa;"></p>
+            </div>
+            <button class="btn btn-primary" id="replyLetterBtn">我也想写一封回去</button>
+        </div>
+    </div>
+
+    <!-- 信墙 -->
+    <div class="page" id="page-letter-wall">
+        <h2>信墙</h2>
+        <div style="margin:10px 0;">
+            <button class="btn" data-sort="new">最新</button>
+            <button class="btn" data-sort="old">最久</button>
+        </div>
+        <div id="letterWallCards" style="columns:2; column-gap:10px;"></div>
+        <p id="wallEmpty" style="color:#8a8a8a;">还没有人公开信件，你是第一个。</p>
+    </div>
+
+    <!-- 愿望清单入口 -->
+    <div class="page" id="page-wish-entry">
+        <h2>我们的愿望清单</h2>
+        <p style="color:#8a8a8a;">「想一起做的事，一件一件来。」</p>
+        <button class="btn btn-primary" data-action="wish-create">创建我们的清单</button>
+        <button class="btn" data-action="wish-inspire">看看别人的愿望</button>
+    </div>
+
+    <!-- 清单页 -->
+    <div class="page" id="page-wish-list">
+        <div style="width:100%; max-width:600px;">
+            <h3 id="wishTitle">我们的100件事</h3>
+            <div style="margin:10px
