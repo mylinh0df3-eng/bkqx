@@ -1,0 +1,253 @@
+/* ========== 全局 / Global ========== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+:root {
+    --bg: #0a0a14;
+    --bg2: #12121c;
+    --paper: #f5f0e8;
+    --warm: #f5f0e8;
+    --red: #d66a5a;
+    --gray: #8a8a8a;
+    --darkgray: #555;
+    --font-serif: 'Noto Serif SC', 'Songti SC', serif;
+    --font-sans: 'Noto Sans SC', 'PingFang SC', sans-serif;
+}
+
+body {
+    background: var(--bg);
+    color: var(--warm);
+    font-family: var(--font-sans);
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+    min-height: 100vh;
+}
+
+/* ========== 页面容器 / Page Container ========== */
+.page {
+    display: none;
+    min-height: 100vh;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    position: relative;
+}
+.page.active {
+    display: flex;
+    animation: fadeIn 0.8s ease;
+}
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* ========== 开场页 / Intro ========== */
+.intro-line {
+    font-size: 1.1em;
+    text-align: center;
+    margin: 6px 0;
+    animation: fadeIn 1s ease;
+}
+
+/* ========== 光标 / Cursor ========== */
+.cursor-blink {
+    display: inline-block;
+    width: 2px;
+    height: 1.2em;
+    background: var(--warm);
+    animation: blink 1s infinite;
+    vertical-align: middle;
+}
+@keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+}
+
+/* ========== 按钮 / Buttons ========== */
+.btn {
+    background: none;
+    border: none;
+    color: var(--warm);
+    font-size: 1.1em;
+    padding: 10px 18px;
+    cursor: pointer;
+    transition: opacity 0.3s;
+    font-family: inherit;
+}
+.btn:hover { opacity: 0.7; }
+.btn-primary {
+    color: var(--red);
+    border-bottom: 2px solid var(--red);
+    padding-bottom: 2px;
+    font-size: 1.2em;
+}
+.btn-block {
+    display: block;
+    width: 100%;
+    text-align: center;
+    margin: 8px 0;
+}
+
+/* ========== 顶部小字 / Top Note ========== */
+.top-note {
+    position: fixed;
+    top: 12px;
+    left: 12px;
+    font-size: 12px;
+    color: var(--gray);
+    z-index: 100;
+}
+
+/* ========== 跳过按钮 / Skip Button ========== */
+.skip-btn {
+    position: fixed;
+    top: 12px;
+    right: 16px;
+    font-size: 12px;
+    color: var(--gray);
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 100;
+}
+
+/* ========== 竖排导航 / Vertical Nav ========== */
+.vertical-nav {
+    position: fixed;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    writing-mode: vertical-rl;
+    display: flex;
+    gap: 18px;
+    z-index: 100;
+    font-size: 14px;
+    color: var(--gray);
+}
+.vertical-nav a {
+    color: inherit;
+    text-decoration: none;
+    cursor: pointer;
+}
+.vertical-nav a.active {
+    color: var(--warm);
+}
+
+/* ========== 弹幕墙 / Barrage Wall ========== */
+.barrage-track {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 33.33%;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+}
+#track1 { top: 0; }
+#track2 { top: 33.33%; }
+#track3 { top: 66.66%; }
+.barrage-item {
+    position: absolute;
+    white-space: nowrap;
+    font-size: 0.95em;
+    color: var(--warm);
+    animation: scrollRight linear infinite;
+    cursor: pointer;
+    padding: 4px 12px;
+}
+.barrage-item.red {
+    color: var(--red);
+}
+@keyframes scrollRight {
+    from { transform: translateX(100vw); }
+    to { transform: translateX(-100%); }
+}
+
+/* ========== 信纸 / Letter Paper ========== */
+.letter-paper {
+    background: var(--paper);
+    color: #2b2b2b;
+    width: 100%;
+    max-width: 600px;
+    border-radius: 2px;
+    padding: 30px 24px;
+    box-shadow: 0 4px 30px rgba(0,0,0,0.6);
+    font-family: var(--font-serif);
+    position: relative;
+}
+.letter-paper .no {
+    position: absolute;
+    top: 10px;
+    right: 16px;
+    font-size: 12px;
+    color: #aaa;
+}
+.letter-paper input,
+.letter-paper textarea {
+    width: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-family: inherit;
+    font-size: 1.1em;
+    color: #2b2b2b;
+    resize: none;
+    padding: 8px 0;
+}
+.letter-paper textarea {
+    min-height: 180px;
+}
+
+/* ========== 信墙 / Letter Wall ========== */
+.wall-card {
+    background: rgba(255,255,255,0.05);
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    break-inside: avoid;
+}
+.wall-card p {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    font-size: 0.9em;
+}
+.wall-card.expanded p {
+    -webkit-line-clamp: unset;
+}
+
+/* ========== 愿望清单 / Wish List ========== */
+.wish-list {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+    max-width: 600px;
+}
+.wish-col {
+    flex: 1;
+    min-height: 100px;
+}
+.wish-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    margin: 6px 0;
+    background: rgba(255,255,255,0.05);
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9em;
+}
+.wish-item.done {
+    color: var(--gray);
+    text-decoration: line-through;
+}
+.wish-circle {
+    width: 18
